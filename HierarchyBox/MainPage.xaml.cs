@@ -7,8 +7,9 @@
             InitializeComponent();
         }
 
-        private void OnFileExplorerButtonClicked(object sender, EventArgs e)
+        private async void OnFileExplorerButtonClicked(object sender, EventArgs e)
         {
+            await Navigation.PushAsync(new Views.FileExplorer.SelectFolderPage());
         }
     }
 }
