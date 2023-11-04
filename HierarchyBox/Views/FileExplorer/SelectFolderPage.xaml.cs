@@ -14,6 +14,7 @@ public partial class SelectFolderPage : ContentPage
             var result = await FolderPicker.Default.PickAsync("~", source.Token);
             if (result.IsSuccessful)
             {
+                await Navigation.PushAsync(new FileExplorerPage());
             }
             else
             {
