@@ -1,3 +1,5 @@
+using HierarchyBox.Views.Commons;
+
 namespace HierarchyBox.Views.FileExplorer;
 
 public partial class FileExplorerPage : ContentPage
@@ -13,6 +15,7 @@ public partial class FileExplorerPage : ContentPage
     {
         var fileNames = Directory.EnumerateFiles(folderPath);
 
-        Root.Content = new BoxView();
+        var folderName = Path.GetFileName(folderPath);
+        Root.Content = HierarchyBoxViewCreator.Create(folderName);
     }
 }
