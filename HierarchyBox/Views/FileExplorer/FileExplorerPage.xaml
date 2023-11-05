@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:HierarchyBox.Views.Commons"
              x:Class="HierarchyBox.Views.FileExplorer.FileExplorerPage"
              Title="FileExplorerPage">
-    <ScrollView x:Name="Root">
-        <controls:HierarchyBoxView/>
+    <ScrollView>
+        <controls:HierarchyBoxView x:Name="RootBox"/>
     </ScrollView>
 </ContentPage>
