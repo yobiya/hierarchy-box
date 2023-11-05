@@ -54,6 +54,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\Commons\HierarchyBoxView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\FileExplorer\SelectFolderPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
