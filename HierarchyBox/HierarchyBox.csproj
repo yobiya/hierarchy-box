@@ -51,6 +51,7 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="ReactiveProperty" Version="9.3.4" />
 	</ItemGroup>
 
 	<ItemGroup>
