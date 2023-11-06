@@ -13,7 +13,8 @@
                 BorderColor="DarkGray"
                 BackgroundColor="Transparent"
                 Margin="10"
-                Padding="6,0"/>
+                Padding="6,0"
+                Command="{Binding OnClickedDirectoryName}"/>
             <ListView ItemsSource="{Binding NameList}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
