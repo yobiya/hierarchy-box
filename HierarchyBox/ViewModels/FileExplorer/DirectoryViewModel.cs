@@ -1,16 +1,20 @@
-﻿using Reactive.Bindings;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Reactive.Bindings;
 using System.Collections;
 using System.Windows.Input;
 
 namespace HierarchyBox.ViewModels.FileExplorer
 {
-    public class DirectoryViewModel
+    public partial class DirectoryViewModel : ObservableObject
     {
         private readonly string _directoryPath;
         private bool _isOpened = true;
 
         public string Name { get; }
-        public ReactiveCollection<string> NameList { get; private set; } = new();
+
+        [ObservableProperty]
+        private List<string> _nameList = new();
+
         public IEnumerable BoxList { get; }
         public ICommand OnClickedDirectoryName { get; }
 
@@ -34,12 +38,20 @@ namespace HierarchyBox.ViewModels.FileExplorer
         {
             _isOpened = !_isOpened;
 
+            List<string> newList = new();
             if (_isOpened)
             {
+                foreach (var name in Directory.EnumerateFiles(_directoryPath).Select(Path.GetFileName))
+                {
+                    newList.Add(name);
+                }
             }
             else
             {
+                newList.Add("---");
             }
+
+            NameList = newList;
         }
     }
 }
