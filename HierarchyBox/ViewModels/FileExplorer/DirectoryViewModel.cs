@@ -5,6 +5,9 @@ namespace HierarchyBox.ViewModels.FileExplorer
 {
     public class DirectoryViewModel
     {
+        private readonly string _directoryPath;
+        private bool _isOpened = true;
+
         public string Name { get; }
         public ReactiveCollection<string> NameList { get; private set; } = new();
         public IEnumerable BoxList { get; }
@@ -12,6 +15,8 @@ namespace HierarchyBox.ViewModels.FileExplorer
 
         public DirectoryViewModel(string directoryPath)
         {
+            _directoryPath = directoryPath;
+
             Name = Path.GetFileName(directoryPath);
 
             foreach (var name in Directory.EnumerateFiles(directoryPath).Select(Path.GetFileName))
@@ -26,6 +31,14 @@ namespace HierarchyBox.ViewModels.FileExplorer
 
         private void ToggleDirectoryOpenClose()
         {
+            _isOpened = !_isOpened;
+
+            if (_isOpened)
+            {
+            }
+            else
+            {
+            }
         }
     }
 }
