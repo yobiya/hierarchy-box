@@ -1,5 +1,6 @@
 ﻿using Reactive.Bindings;
 using System.Collections;
+using System.Windows.Input;
 
 namespace HierarchyBox.ViewModels.FileExplorer
 {
@@ -11,7 +12,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
         public string Name { get; }
         public ReactiveCollection<string> NameList { get; private set; } = new();
         public IEnumerable BoxList { get; }
-        public ReactiveCommand OnClickedDirectoryName { get; }
+        public ICommand OnClickedDirectoryName { get; }
 
         public DirectoryViewModel(string directoryPath)
         {
@@ -26,7 +27,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
 
             BoxList = Directory.EnumerateDirectories(directoryPath).Select(path => new DirectoryViewModel(path));
 
-            OnClickedDirectoryName = new ReactiveCommand().WithSubscribe(ToggleDirectoryOpenClose);
+            OnClickedDirectoryName = new Command(ToggleDirectoryOpenClose);
         }
 
         private void ToggleDirectoryOpenClose()
