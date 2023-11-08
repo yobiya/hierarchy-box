@@ -15,7 +15,7 @@
                 Margin="10"
                 Padding="6,0"
                 Command="{Binding OnClickedDirectoryName}"/>
-            <ListView ItemsSource="{Binding FileNames}">
+            <ListView ItemsSource="{Binding FileNames}" IsVisible="{Binding IsVisibleFileNameList}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

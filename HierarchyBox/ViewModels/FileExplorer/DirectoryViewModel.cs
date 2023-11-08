@@ -14,6 +14,9 @@ namespace HierarchyBox.ViewModels.FileExplorer
         [ObservableProperty]
         private string[] _fileNames = Array.Empty<string>();
 
+        [ObservableProperty]
+        private bool _isVisibleFileNameList = true;
+
         public IEnumerable BoxList { get; }
         public ICommand OnClickedDirectoryName { get; }
 
@@ -36,10 +39,12 @@ namespace HierarchyBox.ViewModels.FileExplorer
             if (_isOpened)
             {
                 FileNames = Directory.EnumerateFiles(_directoryPath).Select(Path.GetFileName).ToArray();
+                IsVisibleFileNameList = true;
             }
             else
             {
-                FileNames = new [] { "---" };
+                FileNames = new [] { " " };
+                IsVisibleFileNameList = false;
             }
         }
     }
