@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Reactive.Bindings;
 using System.Collections;
 using System.Windows.Input;
 
@@ -13,7 +12,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
         public string Name { get; }
 
         [ObservableProperty]
-        private List<string> _nameList = new();
+        private string[] _fileNames = Array.Empty<string>();
 
         public IEnumerable BoxList { get; }
         public ICommand OnClickedDirectoryName { get; }
@@ -24,11 +23,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
 
             Name = Path.GetFileName(directoryPath);
 
-            foreach (var name in Directory.EnumerateFiles(directoryPath).Select(Path.GetFileName))
-            {
-                NameList.Add(name);
-            }
-
+            FileNames = Directory.EnumerateFiles(directoryPath).Select(Path.GetFileName).ToArray();
             BoxList = Directory.EnumerateDirectories(directoryPath).Select(path => new DirectoryViewModel(path));
 
             OnClickedDirectoryName = new Command(ToggleDirectoryOpenClose);
@@ -38,20 +33,14 @@ namespace HierarchyBox.ViewModels.FileExplorer
         {
             _isOpened = !_isOpened;
 
-            List<string> newList = new();
             if (_isOpened)
             {
-                foreach (var name in Directory.EnumerateFiles(_directoryPath).Select(Path.GetFileName))
-                {
-                    newList.Add(name);
-                }
+                FileNames = Directory.EnumerateFiles(_directoryPath).Select(Path.GetFileName).ToArray();
             }
             else
             {
-                newList.Add("---");
+                FileNames = new [] { "---" };
             }
-
-            NameList = newList;
         }
     }
 }

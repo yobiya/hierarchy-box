@@ -15,7 +15,7 @@
                 Margin="10"
                 Padding="6,0"
                 Command="{Binding OnClickedDirectoryName}"/>
-            <ListView ItemsSource="{Binding NameList}" CachingStrategy="RetainElement">
+            <ListView ItemsSource="{Binding FileNames}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
