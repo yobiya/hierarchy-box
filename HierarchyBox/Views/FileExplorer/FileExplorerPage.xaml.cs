@@ -8,6 +8,6 @@ public partial class FileExplorerPage : ContentPage
 	{
 		InitializeComponent();
 
-        RootBox.BindingContext = new DirectoryViewModel(directoryPath);
+        RootBox.BindingContext = new DirectoryViewModel(directoryPath, true);
 	}
 }

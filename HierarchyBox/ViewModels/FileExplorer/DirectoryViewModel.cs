@@ -16,14 +16,24 @@ namespace HierarchyBox.ViewModels.FileExplorer
         [ObservableProperty]
         private bool _isVisibleFileNames = true;
 
+        [ObservableProperty]
         private DirectoryViewModel[] _directoryViewModels = Array.Empty<DirectoryViewModel>();
+
+        [ObservableProperty]
+        private bool _isVisibleDirectories = true;
 
         public ICommand OnClickedDirectoryName { get; }
 
-        public DirectoryViewModel(string directoryPath)
+        public DirectoryViewModel(string directoryPath, bool isOpen)
         {
+            if (directoryPath is null)
+            {
+                // ダミーデータなので、何も行わない
+                return;
+            }
+
             _directoryPath = directoryPath;
-            _isOpened = true;
+            _isOpened = isOpen;
 
             Name = Path.GetFileName(directoryPath);
 
@@ -65,11 +75,23 @@ namespace HierarchyBox.ViewModels.FileExplorer
             {
                 HideFileNames();
             }
+
+            var directoryViewModels = Directory.EnumerateDirectories(_directoryPath).Select(path => new DirectoryViewModel(path, false)).ToArray();
+            if (directoryViewModels.Length > 0)
+            {
+                DirectoryViewModels = directoryViewModels;
+                IsVisibleDirectories = true;
+            }
+            else
+            {
+                HideDirectories();
+            }
         }
 
         private void Close()
         {
             HideFileNames();
+            HideDirectories();
         }
 
         private void HideFileNames()
@@ -79,6 +101,15 @@ namespace HierarchyBox.ViewModels.FileExplorer
             // ダミーの要素を入れて、非表示にする
             FileNames = new [] { " " };
             IsVisibleFileNames = false;
+        }
+
+        private void HideDirectories()
+        {
+            // 要素数が０のコレクションがバインドされると
+            // 以降のListViewが正しく表示されないので
+            // ダミーの要素を入れて、非表示にする
+            DirectoryViewModels = new [] { new DirectoryViewModel(null, false) };
+            IsVisibleDirectories = false;
         }
     }
 }

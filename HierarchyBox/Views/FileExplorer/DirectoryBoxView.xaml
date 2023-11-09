@@ -24,7 +24,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ListView ItemsSource="{Binding BoxList}">
+            <ListView ItemsSource="{Binding DirectoryViewModels}" IsVisible="{Binding IsVisibleDirectories}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
