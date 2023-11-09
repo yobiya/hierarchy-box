@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:HierarchyBox.Views.Commons"
-             x:Class="HierarchyBox.Views.Commons.HierarchyBoxView">
+             xmlns:controls="clr-namespace:HierarchyBox.Views.FileExplorer"
+             x:Class="HierarchyBox.Views.FileExplorer.DirectoryBoxView">
     <Frame
         BorderColor="DarkGray"
         CornerRadius="16">
@@ -28,7 +28,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <controls:HierarchyBoxView BindingContext="{Binding .}"/>
+                            <controls:DirectoryBoxView BindingContext="{Binding .}"/>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -56,7 +56,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\Commons\HierarchyBoxView.xaml">
+	  <Compile Update="Views\FileExplorer\DirectoryBoxView.xaml.cs">
+	    <DependentUpon>DirectoryBoxView.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\FileExplorer\DirectoryBoxView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FileExplorer\SelectFolderPage.xaml">
