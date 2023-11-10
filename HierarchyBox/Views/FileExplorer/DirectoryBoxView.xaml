@@ -15,6 +15,7 @@
                 BackgroundColor="Transparent"
                 Margin="10"
                 Padding="6,0"
+                BorderWidth="2"
                 Command="{Binding OnClickedDirectoryName}"/>
             <ListView ItemsSource="{Binding FileNames}" IsVisible="{Binding IsVisibleFileNames}">
                 <ListView.ItemTemplate>
