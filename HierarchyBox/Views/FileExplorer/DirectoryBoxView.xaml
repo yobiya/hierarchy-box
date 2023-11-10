@@ -7,13 +7,13 @@
         x:Name="BoxFrame"
         BorderColor="DarkGray"
         CornerRadius="16">
-        <VerticalStackLayout>
+        <VerticalStackLayout Spacing="10">
             <Button
                 Text="{Binding Name}"
                 HorizontalOptions="Start"
                 BorderColor="DarkGray"
                 BackgroundColor="Transparent"
-                Margin="10"
+                Margin="5"
                 Padding="6,0"
                 BorderWidth="2"
                 Command="{Binding OnClickedDirectoryName}"/>
