@@ -4,6 +4,7 @@
              xmlns:controls="clr-namespace:HierarchyBox.Views.FileExplorer"
              x:Class="HierarchyBox.Views.FileExplorer.DirectoryBoxView">
     <Frame
+        x:Name="BoxFrame"
         BorderColor="DarkGray"
         CornerRadius="16">
         <VerticalStackLayout>
