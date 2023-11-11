@@ -7,6 +7,16 @@ namespace HierarchyBox.ViewModels.FileExplorer
 {
     public partial class DirectoryViewModel : ObservableObject
     {
+        public class FileInfo
+        {
+            public string Name { get; }
+
+            public FileInfo(string name)
+            {
+                Name = name;
+            }
+        }
+
         private readonly string _directoryPath;
         private readonly Subject<Unit> _onToggleDirectorySubject = new ();
         private bool _isOpened;
@@ -14,7 +24,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
         public string Name { get; }
 
         [ObservableProperty]
-        private string[] _fileNames = Array.Empty<string>();
+        private FileInfo[] _fileInfos = Array.Empty<FileInfo>();
 
         [ObservableProperty]
         private bool _isVisibleFileNames = true;
@@ -71,15 +81,15 @@ namespace HierarchyBox.ViewModels.FileExplorer
 
         private void Open()
         {
-            var fileNames = Directory.EnumerateFiles(_directoryPath).Select(Path.GetFileName).ToArray();
-            if (fileNames.Length > 0)
+            var fileNames = Directory.EnumerateFiles(_directoryPath).Select(Path.GetFileName);
+            if (fileNames.Any())
             {
-                FileNames = fileNames;
+                FileInfos = fileNames.Select(name => new FileInfo(name)).ToArray();
                 IsVisibleFileNames = true;
             }
             else
             {
-                HideFileNames();
+                HideFiles();
             }
 
             var directoryViewModels = Directory.EnumerateDirectories(_directoryPath).Select(path => new DirectoryViewModel(path, false)).ToArray();
@@ -101,16 +111,16 @@ namespace HierarchyBox.ViewModels.FileExplorer
 
         private void Close()
         {
-            HideFileNames();
+            HideFiles();
             HideDirectories();
         }
 
-        private void HideFileNames()
+        private void HideFiles()
         {
             // 要素数が０のコレクションがバインドされると
             // 以降のListViewが正しく表示されないので
             // ダミーの要素を入れて、非表示にする
-            FileNames = new [] { " " };
+            FileInfos = new [] { new FileInfo(" ") };
             IsVisibleFileNames = false;
         }
 

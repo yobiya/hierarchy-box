@@ -17,11 +17,13 @@
                 Padding="6,0"
                 BorderWidth="2"
                 Command="{Binding OnClickedDirectoryName}"/>
-            <ListView ItemsSource="{Binding FileNames}" IsVisible="{Binding IsVisibleFileNames}">
+            <ListView ItemsSource="{Binding FileInfos}" IsVisible="{Binding IsVisibleFileNames}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Label Text="{Binding .}"/>
+                            <HorizontalStackLayout>
+                                <Label Text="{Binding Name}"/>
+                            </HorizontalStackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
