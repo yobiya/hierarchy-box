@@ -21,9 +21,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <HorizontalStackLayout>
-                                <Label Text="{Binding Name}"/>
-                            </HorizontalStackLayout>
+                            <controls:FileCellView BindingContext="{Binding .}"/>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
