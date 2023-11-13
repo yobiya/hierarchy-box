@@ -7,16 +7,6 @@ namespace HierarchyBox.ViewModels.FileExplorer
 {
     public partial class DirectoryViewModel : ObservableObject
     {
-        public class FileInfo
-        {
-            public string Name { get; }
-
-            public FileInfo(string name)
-            {
-                Name = name;
-            }
-        }
-
         private readonly string _directoryPath;
         private readonly Subject<Unit> _onToggleDirectorySubject = new ();
         private bool _isOpened;
@@ -24,7 +14,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
         public string Name { get; }
 
         [ObservableProperty]
-        private FileInfo[] _fileInfos = Array.Empty<FileInfo>();
+        private FileViewModel[] _fileInfos = Array.Empty<FileViewModel>();
 
         [ObservableProperty]
         private bool _isVisibleFileNames = true;
@@ -84,7 +74,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
             var fileNames = Directory.EnumerateFiles(_directoryPath).Select(Path.GetFileName);
             if (fileNames.Any())
             {
-                FileInfos = fileNames.Select(name => new FileInfo(name)).ToArray();
+                FileInfos = fileNames.Select(name => new FileViewModel(_directoryPath, name)).ToArray();
                 IsVisibleFileNames = true;
             }
             else
@@ -120,7 +110,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
             // 要素数が０のコレクションがバインドされると
             // 以降のListViewが正しく表示されないので
             // ダミーの要素を入れて、非表示にする
-            FileInfos = new [] { new FileInfo(" ") };
+            FileInfos = new [] { new FileViewModel("", " ") };
             IsVisibleFileNames = false;
         }
 
