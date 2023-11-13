@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HierarchyBox.Views.FileExplorer.FileCellView">
     <HorizontalStackLayout>
+        <FlyoutBase.ContextFlyout>
+            <MenuFlyout x:Name="FileContextMenuFlyout"/>
+        </FlyoutBase.ContextFlyout>
         <Label Text="{Binding Name}"/>
     </HorizontalStackLayout>
 </ContentView>
