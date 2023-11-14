@@ -15,9 +15,11 @@
                 HorizontalOptions="Start"
                 BorderColor="DarkGray"
                 BackgroundColor="Transparent"
-                Margin="5"
-                Padding="6,0"
-                BorderWidth="2"
+                HeightRequest="70"
+                Margin="-20,-20,0,0"
+                Padding="35,15,15,0"
+                CornerRadius="20"
+                BorderWidth="3"
                 Command="{Binding OnClickedDirectoryName}"/>
             <ListView ItemsSource="{Binding FileInfos}" IsVisible="{Binding IsVisibleFileNames}">
                 <ListView.ItemTemplate>
