@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Reactive;
-using System.Reactive.Subjects;
 using System.Windows.Input;
 
 namespace HierarchyBox.ViewModels.FileExplorer
@@ -8,7 +6,6 @@ namespace HierarchyBox.ViewModels.FileExplorer
     public partial class DirectoryViewModel : ObservableObject
     {
         private readonly string _directoryPath;
-        private readonly Subject<Unit> _onToggleDirectorySubject = new ();
         private bool _isOpened;
 
         public string Name { get; }
@@ -26,7 +23,6 @@ namespace HierarchyBox.ViewModels.FileExplorer
         private bool _isVisibleDirectories = true;
 
         public ICommand OnClickedDirectoryName { get; }
-        public IObservable<Unit> OnToggleDirectoryAsObservable => _onToggleDirectorySubject;
 
         public DirectoryViewModel(string directoryPath, bool isOpen)
         {
@@ -65,8 +61,6 @@ namespace HierarchyBox.ViewModels.FileExplorer
             {
                 Close();
             }
-
-            _onToggleDirectorySubject.OnNext(Unit.Default);
         }
 
         private void Open()
@@ -85,11 +79,6 @@ namespace HierarchyBox.ViewModels.FileExplorer
             var directoryViewModels = Directory.EnumerateDirectories(_directoryPath).Select(path => new DirectoryViewModel(path, false)).ToArray();
             if (directoryViewModels.Length > 0)
             {
-                foreach (var vm in directoryViewModels)
-                {
-                    vm.OnToggleDirectoryAsObservable.Subscribe(_onToggleDirectorySubject);
-                }
-
                 DirectoryViewModels = directoryViewModels;
                 IsVisibleDirectories = true;
             }
