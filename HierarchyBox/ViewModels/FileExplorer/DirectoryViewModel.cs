@@ -47,10 +47,6 @@ namespace HierarchyBox.ViewModels.FileExplorer
             {
                 Open();
             }
-            else
-            {
-                Close();
-            }
 
             OnClickedDirectoryName = new Command(ToggleDirectoryOpenClose);
         }
@@ -64,10 +60,6 @@ namespace HierarchyBox.ViewModels.FileExplorer
             {
                 Open();
             }
-            else
-            {
-                Close();
-            }
         }
 
         private void Open()
@@ -80,7 +72,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
             }
             else
             {
-                HideFiles();
+                IsVisibleFileNames = false;
             }
 
             var directoryViewModels = Directory.EnumerateDirectories(_directoryPath).Select(path => new DirectoryViewModel(path, false)).ToArray();
@@ -91,32 +83,8 @@ namespace HierarchyBox.ViewModels.FileExplorer
             }
             else
             {
-                HideDirectories();
+                IsVisibleDirectories = false;
             }
-        }
-
-        private void Close()
-        {
-            HideFiles();
-            HideDirectories();
-        }
-
-        private void HideFiles()
-        {
-            // 要素数が０のコレクションがバインドされると
-            // 以降のListViewが正しく表示されないので
-            // ダミーの要素を入れて、非表示にする
-            FileInfos = new [] { new FileViewModel("", " ") };
-            IsVisibleFileNames = false;
-        }
-
-        private void HideDirectories()
-        {
-            // 要素数が０のコレクションがバインドされると
-            // 以降のListViewが正しく表示されないので
-            // ダミーの要素を入れて、非表示にする
-            DirectoryViewModels = new [] { new DirectoryViewModel(null, false) };
-            IsVisibleDirectories = false;
         }
     }
 }
