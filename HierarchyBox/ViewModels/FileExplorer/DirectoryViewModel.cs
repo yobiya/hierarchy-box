@@ -27,43 +27,31 @@ namespace HierarchyBox.ViewModels.FileExplorer
         [ObservableProperty]
         private bool _isVisibleDirectories = true;
 
-        public ICommand OnClickedDirectoryName { get; }
+        public ICommand OnRequestOpenDirectory { get; }
+        public ICommand OnRequestCloseDirectory { get; }
 
         public DirectoryViewModel(string directoryPath, bool isOpen)
         {
-            if (directoryPath is null)
-            {
-                // ダミーデータなので、何も行わない
-                return;
-            }
-
             _directoryPath = directoryPath;
             IsOpened = isOpen;
-            IsClosed = !IsOpened;
+            IsClosed = !isOpen;
 
             Name = Path.GetFileName(directoryPath);
 
-            if (IsOpened)
+            if (isOpen)
             {
                 Open();
             }
 
-            OnClickedDirectoryName = new Command(ToggleDirectoryOpenClose);
-        }
-
-        private void ToggleDirectoryOpenClose()
-        {
-            IsOpened = !IsOpened;
-            IsClosed = !IsOpened;
-
-            if (IsOpened)
-            {
-                Open();
-            }
+            OnRequestOpenDirectory = new Command(Open);
+            OnRequestCloseDirectory = new Command(Close);
         }
 
         private void Open()
         {
+            IsOpened = true;
+            IsClosed = false;
+
             var fileNames = Directory.EnumerateFiles(_directoryPath).Select(Path.GetFileName);
             if (fileNames.Any())
             {
@@ -85,6 +73,12 @@ namespace HierarchyBox.ViewModels.FileExplorer
             {
                 IsVisibleDirectories = false;
             }
+        }
+
+        private void Close()
+        {
+            IsOpened = false;
+            IsClosed = true;
         }
     }
 }

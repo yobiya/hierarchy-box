@@ -13,7 +13,7 @@
             Margin="0,0,0,0"
             CornerRadius="20"
             BorderWidth="3"
-            Command="{Binding OnClickedDirectoryName}"/>
+            Command="{Binding OnRequestOpenDirectory}"/>
         <Border
             IsVisible="{Binding IsOpened}"
             Stroke="DarkGray"
@@ -31,7 +31,7 @@
                 Padding="35,15,15,0"
                 CornerRadius="20"
                 BorderWidth="3"
-                Command="{Binding OnClickedDirectoryName}"/>
+                Command="{Binding OnRequestCloseDirectory}"/>
                 <HorizontalStackLayout>
                     <BoxView WidthRequest="18" Color="Transparent"/>
                     <VerticalStackLayout>
