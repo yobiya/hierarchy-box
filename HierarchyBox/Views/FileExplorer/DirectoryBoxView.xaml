@@ -21,24 +21,31 @@
                 CornerRadius="20"
                 BorderWidth="3"
                 Command="{Binding OnClickedDirectoryName}"/>
-            <ListView ItemsSource="{Binding FileInfos}" IsVisible="{Binding IsVisibleFileNames}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <controls:FileCellView BindingContext="{Binding .}"/>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <ListView ItemsSource="{Binding DirectoryViewModels}" IsVisible="{Binding IsVisibleDirectories}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <controls:DirectoryBoxView BindingContext="{Binding .}"/>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <HorizontalStackLayout>
+                <BoxView
+                    WidthRequest="18"
+                    Color="Transparent"/>
+                <VerticalStackLayout>
+                    <ListView ItemsSource="{Binding FileInfos}" IsVisible="{Binding IsVisibleFileNames}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <controls:FileCellView BindingContext="{Binding .}"/>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <ListView ItemsSource="{Binding DirectoryViewModels}" IsVisible="{Binding IsVisibleDirectories}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <controls:DirectoryBoxView BindingContext="{Binding .}"/>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
         </VerticalStackLayout>
     </Border>
 </ContentView>
