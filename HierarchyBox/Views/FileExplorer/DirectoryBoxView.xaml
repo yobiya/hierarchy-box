@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:HierarchyBox.Views.FileExplorer"
              x:Class="HierarchyBox.Views.FileExplorer.DirectoryBoxView">
-    <Frame
+    <Border
         x:Name="BoxFrame"
-        BorderColor="DarkGray"
-        CornerRadius="16">
+        Stroke="DarkGray"
+        StrokeThickness="3"
+        StrokeShape="RoundRectangle 20"
+        Padding="0">
         <VerticalStackLayout Spacing="10">
             <Button
                 Text="{Binding Name}"
@@ -36,5 +38,5 @@
                 </ListView.ItemTemplate>
             </ListView>
         </VerticalStackLayout>
-    </Frame>
+    </Border>
 </ContentView>

@@ -30,7 +30,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
 
             if (commandName == "open")
             {
-                Launcher.Default.OpenAsync(new OpenFileRequest("Open", new ReadOnlyFile(_fullPath)));
+                var _ = Launcher.Default.OpenAsync(new OpenFileRequest("Open", new ReadOnlyFile(_fullPath)));
             }
         }
     }
