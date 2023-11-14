@@ -9,8 +9,8 @@ public partial class FileExplorerPage : ContentPage
 	{
 		InitializeComponent();
 
-        var applicationLocalDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "HierarchyBox");
-        var contextCommand = new ContextCommand(applicationLocalDirectoryPath);
+        var applicationLocalDirectoryPath = Path.Combine(FileSystem.Current.AppDataDirectory, "HierarchyBox");
+        var contextCommand = ContextCommand.CreateFromDefaultFile(applicationLocalDirectoryPath);
 
         RootBox.BindingContext = new DirectoryViewModel(directoryPath, true, contextCommand);
 	}
