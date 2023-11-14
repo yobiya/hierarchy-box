@@ -11,11 +11,11 @@ namespace HierarchyBox.ViewModels.FileExplorer
 
         public ICommand OnRequestContextMenuItem { get; }
 
-        public FileViewModel(string directoryPath, string fileName)
+        public FileViewModel(string fullPath)
         {
-            _fullPath = Path.Combine(directoryPath, fileName);
+            _fullPath = fullPath;
 
-            Name = fileName;
+            Name = Path.GetFileName(fullPath);
 
             OnRequestContextMenuItem = new Command(CallContextMenu);
         }

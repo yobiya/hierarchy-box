@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using HierarchyBox.Models.FileExplorer;
 using System.Windows.Input;
 
 namespace HierarchyBox.ViewModels.FileExplorer
@@ -6,6 +7,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
     public partial class DirectoryViewModel : ObservableObject
     {
         private readonly string _directoryPath;
+        private readonly ContextCommand _contextCommand;
 
         public string Name { get; }
 
@@ -30,9 +32,10 @@ namespace HierarchyBox.ViewModels.FileExplorer
         public ICommand OnRequestOpenDirectory { get; }
         public ICommand OnRequestCloseDirectory { get; }
 
-        public DirectoryViewModel(string directoryPath, bool isOpen)
+        public DirectoryViewModel(string directoryPath, bool isOpen, ContextCommand contextCommand)
         {
             _directoryPath = directoryPath;
+            _contextCommand = contextCommand;
             IsOpened = isOpen;
             IsClosed = !isOpen;
 
@@ -52,10 +55,10 @@ namespace HierarchyBox.ViewModels.FileExplorer
             IsOpened = true;
             IsClosed = false;
 
-            var fileNames = Directory.EnumerateFiles(_directoryPath).Select(Path.GetFileName);
-            if (fileNames.Any())
+            var fileFullPaths = Directory.EnumerateFiles(_directoryPath);
+            if (fileFullPaths.Any())
             {
-                FileInfos = fileNames.Select(name => new FileViewModel(_directoryPath, name)).ToArray();
+                FileInfos = fileFullPaths.Select(path => new FileViewModel(path)).ToArray();
                 IsVisibleFileNames = true;
             }
             else
@@ -63,7 +66,11 @@ namespace HierarchyBox.ViewModels.FileExplorer
                 IsVisibleFileNames = false;
             }
 
-            var directoryViewModels = Directory.EnumerateDirectories(_directoryPath).Select(path => new DirectoryViewModel(path, false)).ToArray();
+            var directoryViewModels
+                = Directory
+                    .EnumerateDirectories(_directoryPath)
+                    .Select(path => new DirectoryViewModel(path, false, _contextCommand))
+                    .ToArray();
             if (directoryViewModels.Length > 0)
             {
                 DirectoryViewModels = directoryViewModels;
