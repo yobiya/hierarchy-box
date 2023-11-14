@@ -8,7 +8,7 @@
         Stroke="DarkGray"
         StrokeThickness="3"
         StrokeShape="RoundRectangle 20"
-        Padding="0">
+        Padding="0,0,18,12">
         <VerticalStackLayout Spacing="10">
             <Button
                 Text="{Binding Name}"
@@ -22,9 +22,7 @@
                 BorderWidth="3"
                 Command="{Binding OnClickedDirectoryName}"/>
             <HorizontalStackLayout>
-                <BoxView
-                    WidthRequest="18"
-                    Color="Transparent"/>
+                <BoxView WidthRequest="18" Color="Transparent"/>
                 <VerticalStackLayout>
                     <ListView ItemsSource="{Binding FileInfos}" IsVisible="{Binding IsVisibleFileNames}">
                         <ListView.ItemTemplate>
@@ -35,11 +33,15 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+                    <BoxView HeightRequest="12" Color="Transparent"/>
                     <ListView ItemsSource="{Binding DirectoryViewModels}" IsVisible="{Binding IsVisibleDirectories}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
-                                    <controls:DirectoryBoxView BindingContext="{Binding .}"/>
+                                    <VerticalStackLayout>
+                                        <controls:DirectoryBoxView BindingContext="{Binding .}"/>
+                                        <BoxView HeightRequest="6" Color="Transparent"/>
+                                    </VerticalStackLayout>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
