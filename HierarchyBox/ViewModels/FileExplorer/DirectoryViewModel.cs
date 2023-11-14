@@ -6,9 +6,14 @@ namespace HierarchyBox.ViewModels.FileExplorer
     public partial class DirectoryViewModel : ObservableObject
     {
         private readonly string _directoryPath;
-        private bool _isOpened;
 
         public string Name { get; }
+
+        [ObservableProperty]
+        private bool _isOpened;
+
+        [ObservableProperty]
+        private bool _isClosed;
 
         [ObservableProperty]
         private FileViewModel[] _fileInfos = Array.Empty<FileViewModel>();
@@ -33,11 +38,12 @@ namespace HierarchyBox.ViewModels.FileExplorer
             }
 
             _directoryPath = directoryPath;
-            _isOpened = isOpen;
+            IsOpened = isOpen;
+            IsClosed = !IsOpened;
 
             Name = Path.GetFileName(directoryPath);
 
-            if (_isOpened)
+            if (IsOpened)
             {
                 Open();
             }
@@ -51,9 +57,10 @@ namespace HierarchyBox.ViewModels.FileExplorer
 
         private void ToggleDirectoryOpenClose()
         {
-            _isOpened = !_isOpened;
+            IsOpened = !IsOpened;
+            IsClosed = !IsOpened;
 
-            if (_isOpened)
+            if (IsOpened)
             {
                 Open();
             }
