@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace HierarchyBox.ViewModels.FileExplorer
 {
-    public partial class FileViewModel : ObservableObject, IContextCommandHolder
+    public partial class FileViewModel : ObservableObject
     {
         private readonly string _fullPath;
         private readonly ContextCommand _contextCommand;
@@ -27,13 +27,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
 
         private void CallContextMenu(object parameter)
         {
-            var commandName = parameter as string;
-            if (commandName is null)
-            {
-                return;
-            }
-
-            var info = CommandInfos.FirstOrDefault(i => i.Name == commandName);
+            var info = CommandInfos.FirstOrDefault(i => i == parameter);
             if (info.Command == ContextCommand.DefaultCommandName)
             {
                 // デフォルトの動作を呼び出す
