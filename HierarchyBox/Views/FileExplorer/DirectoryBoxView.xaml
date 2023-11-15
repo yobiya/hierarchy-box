@@ -10,7 +10,7 @@
             HorizontalOptions="Start"
             BorderColor="DarkGray"
             BackgroundColor="Transparent"
-            Margin="0,0,0,0"
+            Margin="0"
             CornerRadius="20"
             BorderWidth="3"
             Command="{Binding OnRequestOpenDirectory}"/>
@@ -19,8 +19,8 @@
             Stroke="DarkGray"
             StrokeThickness="3"
             StrokeShape="RoundRectangle 20"
-            Padding="0,0,18,12">
-            <VerticalStackLayout Spacing="10">
+            Padding="0">
+            <VerticalStackLayout>
                 <Button
                 Text="{Binding Name}"
                 HorizontalOptions="Start"
@@ -32,22 +32,18 @@
                 CornerRadius="20"
                 BorderWidth="3"
                 Command="{Binding OnRequestCloseDirectory}"/>
-                <HorizontalStackLayout>
-                    <BoxView WidthRequest="18" Color="Transparent"/>
-                    <VerticalStackLayout>
-                        <ListView ItemsSource="{Binding FileInfos}" IsVisible="{Binding IsVisibleFileNames}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <controls:FileCellView BindingContext="{Binding .}"/>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                        <BoxView HeightRequest="12" Color="Transparent"/>
-                        <VerticalStackLayout x:Name="BoxStackLayout" BindingContext="{Binding DirectoryViewModels}"/>
-                    </VerticalStackLayout>
-                </HorizontalStackLayout>
+                <VerticalStackLayout Spacing="12" Margin="18">
+                    <ListView ItemsSource="{Binding FileInfos}" IsVisible="{Binding IsVisibleFileNames}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <controls:FileCellView BindingContext="{Binding .}"/>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <VerticalStackLayout x:Name="BoxStackLayout" BindingContext="{Binding DirectoryViewModels}" Spacing="12"/>
+                </VerticalStackLayout>
             </VerticalStackLayout>
         </Border>
     </VerticalStackLayout>
