@@ -4,16 +4,9 @@ namespace HierarchyBox.Models.FileExplorer
 {
     public class ContextCommand
     {
-        public class CommandInfo
-        {
-            public string ContextType { get; set; }
-            public string Name { get; set; }
-            public string Command { get; set; }
-        }
-
         private class CommandInfoHolder
         {
-            public IList<CommandInfo> Commands { get; set; }
+            public IList<ContextCommandInfo> Commands { get; set; }
         }
 
         private const string FileName = "FileExplorerContextCommands.json";
@@ -25,13 +18,13 @@ namespace HierarchyBox.Models.FileExplorer
         {
             Commands = new []
             {
-                new CommandInfo
+                new ContextCommandInfo
                 {
                     ContextType = FileContextTypeName,
                     Name = "Open",
                     Command = DefaultCommandName
                 },
-                new CommandInfo
+                new ContextCommandInfo
                 {
                     ContextType = DirectoryContextTypeName,
                     Name = "Open",
@@ -40,8 +33,8 @@ namespace HierarchyBox.Models.FileExplorer
             }
         };
 
-        public CommandInfo[] FileCommandInfos { get; }
-        public CommandInfo[] DirectoryCommandInfos { get; }
+        public ContextCommandInfo[] FileCommandInfos { get; }
+        public ContextCommandInfo[] DirectoryCommandInfos { get; }
 
         private ContextCommand(CommandInfoHolder commandInfoHolder)
         {
