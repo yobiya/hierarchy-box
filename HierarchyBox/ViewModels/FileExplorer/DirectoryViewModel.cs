@@ -58,7 +58,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
             var fileFullPaths = Directory.EnumerateFiles(_directoryPath);
             if (fileFullPaths.Any())
             {
-                FileInfos = fileFullPaths.Select(path => new FileViewModel(path)).ToArray();
+                FileInfos = fileFullPaths.Select(path => new FileViewModel(path, _contextCommand)).ToArray();
                 IsVisibleFileNames = true;
             }
             else
