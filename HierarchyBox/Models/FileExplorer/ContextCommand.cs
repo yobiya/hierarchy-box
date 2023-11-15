@@ -4,7 +4,7 @@ namespace HierarchyBox.Models.FileExplorer
 {
     public class ContextCommand
     {
-        private class CommandInfo
+        public class CommandInfo
         {
             public string ContextType { get; set; }
             public string Name { get; set; }
@@ -17,6 +17,9 @@ namespace HierarchyBox.Models.FileExplorer
         }
 
         private const string FileName = "FileExplorerContextCommands.json";
+        public const string DefaultCommandName = "Default";
+        public const string FileContextTypeName = "File";
+        public const string DirectoryContextTypeName = "Directory";
 
         private static readonly CommandInfoHolder DefaultCommands = new ()
         {
@@ -24,21 +27,26 @@ namespace HierarchyBox.Models.FileExplorer
             {
                 new CommandInfo
                 {
-                    ContextType = "File",
+                    ContextType = FileContextTypeName,
                     Name = "Open",
-                    Command = "Default"
+                    Command = DefaultCommandName
                 },
                 new CommandInfo
                 {
-                    ContextType = "Directory",
+                    ContextType = DirectoryContextTypeName,
                     Name = "Open",
-                    Command = "Default"
+                    Command = DefaultCommandName
                 }
             }
         };
 
-        private ContextCommand()
+        public CommandInfo[] FileCommandInfos { get; }
+        public CommandInfo[] DirectoryCommandInfos { get; }
+
+        private ContextCommand(CommandInfoHolder commandInfoHolder)
         {
+            FileCommandInfos = commandInfoHolder.Commands.Where(i => i.ContextType == FileContextTypeName).ToArray();
+            DirectoryCommandInfos = commandInfoHolder.Commands.Where(i => i.ContextType == DirectoryContextTypeName).ToArray();
         }
 
         public static ContextCommand CreateFromDefaultFile(string applicationLocalDirectoryPath)
@@ -57,7 +65,10 @@ namespace HierarchyBox.Models.FileExplorer
                 File.WriteAllText(defaultFilePath, defaultJsonText);
             }
 
-            return new ContextCommand();
+            var jsonText = File.ReadAllText(defaultFilePath);
+            var commandInfoHolder = JsonSerializer.Deserialize<CommandInfoHolder>(jsonText);
+
+            return new ContextCommand(commandInfoHolder);
         }
     }
 }
