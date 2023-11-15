@@ -45,18 +45,7 @@
                             </ListView.ItemTemplate>
                         </ListView>
                         <BoxView HeightRequest="12" Color="Transparent"/>
-                        <ListView ItemsSource="{Binding DirectoryViewModels}" IsVisible="{Binding IsVisibleDirectories}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <VerticalStackLayout>
-                                            <controls:DirectoryBoxView BindingContext="{Binding .}"/>
-                                            <BoxView HeightRequest="6" Color="Transparent"/>
-                                        </VerticalStackLayout>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                        <VerticalStackLayout x:Name="BoxStackLayout" BindingContext="{Binding DirectoryViewModels}"/>
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
