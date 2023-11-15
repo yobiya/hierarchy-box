@@ -2,11 +2,15 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:HierarchyBox.Views.FileExplorer"
+             xmlns:local="clr-namespace:HierarchyBox.Views.ValueConverters"
              x:Class="HierarchyBox.Views.FileExplorer.DirectoryBoxView">
+    <ContentView.Resources>
+        <local:InvertBoolConverter x:Key="invertBool"/>
+    </ContentView.Resources>
     <VerticalStackLayout>
         <Button
             Text="{Binding Name}"
-            IsVisible="{Binding IsClosed}"
+            IsVisible="{Binding IsOpened,Converter={StaticResource invertBool}}"
             HorizontalOptions="Start"
             BorderColor="DarkGray"
             BackgroundColor="Transparent"

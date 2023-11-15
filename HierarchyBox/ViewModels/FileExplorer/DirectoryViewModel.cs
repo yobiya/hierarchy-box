@@ -15,9 +15,6 @@ namespace HierarchyBox.ViewModels.FileExplorer
         private bool _isOpened;
 
         [ObservableProperty]
-        private bool _isClosed;
-
-        [ObservableProperty]
         private FileViewModel[] _fileInfos = Array.Empty<FileViewModel>();
 
         [ObservableProperty]
@@ -37,7 +34,6 @@ namespace HierarchyBox.ViewModels.FileExplorer
             _directoryPath = directoryPath;
             _contextCommand = contextCommand;
             IsOpened = isOpen;
-            IsClosed = !isOpen;
 
             Name = Path.GetFileName(directoryPath);
 
@@ -53,7 +49,6 @@ namespace HierarchyBox.ViewModels.FileExplorer
         private void Open()
         {
             IsOpened = true;
-            IsClosed = false;
 
             var fileFullPaths = Directory.EnumerateFiles(_directoryPath);
             if (fileFullPaths.Any())
@@ -85,7 +80,6 @@ namespace HierarchyBox.ViewModels.FileExplorer
         private void Close()
         {
             IsOpened = false;
-            IsClosed = true;
         }
     }
 }
