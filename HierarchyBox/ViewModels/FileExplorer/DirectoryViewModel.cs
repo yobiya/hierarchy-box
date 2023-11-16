@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using HierarchyBox.Models.FileExplorer;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace HierarchyBox.ViewModels.FileExplorer
@@ -26,8 +27,11 @@ namespace HierarchyBox.ViewModels.FileExplorer
         [ObservableProperty]
         private bool _isVisibleDirectories = true;
 
+        public IEnumerable<ContextCommandInfo> CommandInfos => _contextCommand.DirectoryCommandInfos;
+
         public ICommand OnRequestOpenDirectory { get; }
         public ICommand OnRequestCloseDirectory { get; }
+        public ICommand OnRequestContextMenuItem { get; }
 
         public DirectoryViewModel(string directoryPath, bool isOpen, ContextCommand contextCommand)
         {
@@ -44,6 +48,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
 
             OnRequestOpenDirectory = new Command(Open);
             OnRequestCloseDirectory = new Command(Close);
+            OnRequestContextMenuItem = new Command(CallContextMenu);
         }
 
         private void Open()
@@ -80,6 +85,16 @@ namespace HierarchyBox.ViewModels.FileExplorer
         private void Close()
         {
             IsOpened = false;
+        }
+
+        private void CallContextMenu(object parameter)
+        {
+            var info = CommandInfos.FirstOrDefault(i => i == parameter);
+            if (info.Command == ContextCommand.DefaultCommandName)
+            {
+                // デフォルトの動作を呼び出す
+                Process.Start("explorer.exe", _directoryPath);
+            }
         }
     }
 }

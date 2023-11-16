@@ -17,7 +17,11 @@
             Margin="0"
             CornerRadius="20"
             BorderWidth="3"
-            Command="{Binding OnRequestOpenDirectory}"/>
+            Command="{Binding OnRequestOpenDirectory}">
+            <FlyoutBase.ContextFlyout>
+                <MenuFlyout x:Name="ClosedDirectoryButtonMenuFlyout" BindingContext="{Binding CommandInfos}"/>
+            </FlyoutBase.ContextFlyout>
+        </Button>
         <Border
             IsVisible="{Binding IsOpened}"
             Stroke="DarkGray"
@@ -35,7 +39,11 @@
                 Padding="35,15,15,0"
                 CornerRadius="20"
                 BorderWidth="3"
-                Command="{Binding OnRequestCloseDirectory}"/>
+                Command="{Binding OnRequestCloseDirectory}">
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout x:Name="OpenedDirectoryButtonMenuFlyout" BindingContext="{Binding CommandInfos}"/>
+                    </FlyoutBase.ContextFlyout>
+                </Button>
                 <VerticalStackLayout Spacing="12" Margin="18">
                     <ListView ItemsSource="{Binding FileInfos}" IsVisible="{Binding IsVisibleFileNames}">
                         <ListView.ItemTemplate>
