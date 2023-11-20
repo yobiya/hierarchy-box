@@ -5,15 +5,21 @@
              xmlns:local="clr-namespace:HierarchyBox.Views.ValueConverters"
              x:Class="HierarchyBox.Views.FileExplorer.DirectoryBoxView">
     <ContentView.Resources>
+        <Color x:Key="BorderColor">DarkGray</Color>
+        <Color x:Key="ButtonBackgroundColor">Transparent</Color>
+        <Color x:Key="LightDirectoryNameColor">Blue</Color>
+        <Color x:Key="DarkDirectoryNameColor">Tan</Color>
         <local:InvertBoolConverter x:Key="invertBool"/>
     </ContentView.Resources>
     <VerticalStackLayout>
         <Button
             Text="{Binding Name}"
+            FontAttributes="Bold"
+            TextColor="{AppThemeBinding Light={StaticResource LightDirectoryNameColor}, Dark={StaticResource DarkDirectoryNameColor}}"
             IsVisible="{Binding IsOpened,Converter={StaticResource invertBool}}"
             HorizontalOptions="Start"
-            BorderColor="DarkGray"
-            BackgroundColor="Transparent"
+            BorderColor="{StaticResource BorderColor}"
+            BackgroundColor="{StaticResource ButtonBackgroundColor}"
             Margin="0"
             CornerRadius="20"
             BorderWidth="3"
@@ -24,16 +30,18 @@
         </Button>
         <Border
             IsVisible="{Binding IsOpened}"
-            Stroke="DarkGray"
+            Stroke="{StaticResource BorderColor}"
             StrokeThickness="3"
             StrokeShape="RoundRectangle 20"
             Padding="0">
             <VerticalStackLayout>
                 <Button
                 Text="{Binding Name}"
+                FontAttributes="Bold"
+                TextColor="{AppThemeBinding Light={StaticResource LightDirectoryNameColor}, Dark={StaticResource DarkDirectoryNameColor}}"
                 HorizontalOptions="Start"
-                BorderColor="DarkGray"
-                BackgroundColor="Transparent"
+                BorderColor="{StaticResource BorderColor}"
+                BackgroundColor="{StaticResource ButtonBackgroundColor}"
                 HeightRequest="70"
                 Margin="-20,-20,0,0"
                 Padding="35,15,15,0"
