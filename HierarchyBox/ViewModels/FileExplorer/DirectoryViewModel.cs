@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using HierarchyBox.Models.FileExplorer;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace HierarchyBox.ViewModels.FileExplorer
@@ -90,11 +89,12 @@ namespace HierarchyBox.ViewModels.FileExplorer
         private void CallContextMenu(object parameter)
         {
             var info = CommandInfos.FirstOrDefault(i => i == parameter);
-            if (info.Command == ContextCommand.DefaultCommandName)
+            if (info is null)
             {
-                // デフォルトの動作を呼び出す
-                Process.Start("explorer.exe", _directoryPath);
+                return;
             }
+
+            CommandExecuter.ExecuteDirectoryCommand(info, _directoryPath);
         }
     }
 }
