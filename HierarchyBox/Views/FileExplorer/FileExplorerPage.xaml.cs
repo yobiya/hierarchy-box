@@ -10,8 +10,7 @@ public partial class FileExplorerPage : ContentPage
 	{
 		InitializeComponent();
 
-        var applicationLocalDirectoryPath = Path.Combine(FileSystem.Current.AppDataDirectory, "HierarchyBox");
-        var contextCommand = ContextCommand.CreateFromDefaultFile(applicationLocalDirectoryPath);
+        var contextCommand = ContextCommand.CreateFromDefaultFile(ViewDefinitions.GetApplicationLocalDirectoryPath());
         var errorNotifier = new ErrorNotifier();
         errorNotifier.OnNotifiedMessage += message => DisplayAlert("Error", message, "Close");
 
