@@ -4,8 +4,6 @@ namespace HierarchyBox.Models.FileExplorer
 {
     public static class CommandExecuter
     {
-        private const string DirectoryPathReplaceTag = "{@DIRECTORY_PATH@}";
-
         public static void ExecuteDirectoryCommand(ContextCommandInfo commandInfo, string directoryPath)
         {
             if (commandInfo.Command == ContextCommand.DefaultCommandName)
@@ -16,10 +14,10 @@ namespace HierarchyBox.Models.FileExplorer
             }
 
             var workingDirectory = commandInfo.WorkingDirectory;
-            workingDirectory = workingDirectory.Replace(DirectoryPathReplaceTag, directoryPath);
+            workingDirectory = workingDirectory.Replace(CommandDefinitions.DirectoryPathReplaceTag, directoryPath);
 
             var command = commandInfo.Command;
-            command = command.Replace(DirectoryPathReplaceTag, directoryPath);
+            command = command.Replace(CommandDefinitions.DirectoryPathReplaceTag, directoryPath);
 
             var startInfo = new ProcessStartInfo(command);
             startInfo.UseShellExecute = false;
