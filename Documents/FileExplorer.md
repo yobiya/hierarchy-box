@@ -10,3 +10,18 @@
 
 一度File explorerの機能を実行すると、トップ画面の「Open setting file directory」ボタンで開くディレクトリに
 設定情報の記述されているFileExplorerContextCommands.jsonファイルが生成されます。
+
+JSONで記述されているComands配列にコンテキストメニューの要素を記述します。
+
+* ContextType
+* Name
+* WorkingDirectory
+* Command
+
+### 置き換えられる特殊文字列
+
+Directory
+
+文字列名|置き換えらえる要素
+---|---
+{DIRECTORY_PATH}|コンテキストメニューを開いたディレクトリのパス
