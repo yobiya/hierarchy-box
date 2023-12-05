@@ -13,10 +13,14 @@
 
 JSONで記述されているComands配列にコンテキストメニューの要素を記述します。
 
-* ContextType
-* Name
-* WorkingDirectory
-* Command
+JSONのFile配列に、ファイルのコンテキストメニューを記述し
+Directory配列にディレクトリのコンテキストメニューを記述します。
+
+キー|値
+---|---
+Name|コンテキストメニューの名前
+Command|実行するコマンド
+WorkingDirectory|コマンドを実行するディレクトリのパス
 
 ### 置き換えられる特殊文字列
 

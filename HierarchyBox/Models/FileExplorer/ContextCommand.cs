@@ -6,27 +6,27 @@ namespace HierarchyBox.Models.FileExplorer
     {
         private class CommandInfoHolder
         {
-            public IList<ContextCommandInfo> Commands { get; set; }
+            public IList<ContextCommandInfo> File { get; set; }
+            public IList<ContextCommandInfo> Directory { get; set; }
         }
 
         private const string FileName = "FileExplorerContextCommands.json";
         public const string DefaultCommandName = "Default";
-        public const string FileContextTypeName = "File";
-        public const string DirectoryContextTypeName = "Directory";
 
         private static readonly CommandInfoHolder DefaultCommands = new ()
         {
-            Commands = new []
+            File = new []
             {
                 new ContextCommandInfo
                 {
-                    ContextType = FileContextTypeName,
                     Name = "Open",
                     Command = DefaultCommandName
-                },
+                }
+            },
+            Directory = new []
+            {
                 new ContextCommandInfo
                 {
-                    ContextType = DirectoryContextTypeName,
                     Name = "Open",
                     Command = DefaultCommandName
                 }
@@ -38,8 +38,8 @@ namespace HierarchyBox.Models.FileExplorer
 
         private ContextCommand(CommandInfoHolder commandInfoHolder)
         {
-            FileCommandInfos = commandInfoHolder.Commands.Where(i => i.ContextType == FileContextTypeName).ToArray();
-            DirectoryCommandInfos = commandInfoHolder.Commands.Where(i => i.ContextType == DirectoryContextTypeName).ToArray();
+            FileCommandInfos = commandInfoHolder.File.ToArray();
+            DirectoryCommandInfos = commandInfoHolder.Directory.ToArray();
         }
 
         public static ContextCommand CreateFromDefaultFile(string applicationLocalDirectoryPath)
