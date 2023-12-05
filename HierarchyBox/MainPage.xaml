@@ -10,9 +10,13 @@
             VerticalOptions="Center">
 
             <Button
-                x:Name="FileExplorerButton"
                 Text="File explorer"
                 Clicked="OnFileExplorerButtonClicked"
+                HorizontalOptions="Center" />
+            
+            <Button
+                Text="Open setting file directory"
+                Clicked="OnSettingFileDirectoryOpenButtonClicked"
                 HorizontalOptions="Center" />
 
         </VerticalStackLayout>
