@@ -8,6 +8,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
     {
         private readonly string _directoryPath;
         private readonly ContextCommand _contextCommand;
+        private readonly ErrorNotifier _errorNotifier;
 
         public string Name { get; }
 
@@ -26,16 +27,24 @@ namespace HierarchyBox.ViewModels.FileExplorer
         [ObservableProperty]
         private bool _isVisibleDirectories = true;
 
+        [ObservableProperty]
+        private string _errorMessage = null;
+
         public IEnumerable<ContextCommandInfo> CommandInfos => _contextCommand.DirectoryCommandInfos;
 
         public ICommand OnRequestOpenDirectory { get; }
         public ICommand OnRequestCloseDirectory { get; }
         public ICommand OnRequestContextMenuItem { get; }
 
-        public DirectoryViewModel(string directoryPath, bool isOpen, ContextCommand contextCommand)
+        public DirectoryViewModel(
+            string directoryPath,
+            bool isOpen,
+            ContextCommand contextCommand,
+            ErrorNotifier errorNotifier)
         {
             _directoryPath = directoryPath;
             _contextCommand = contextCommand;
+            _errorNotifier = errorNotifier;
             IsOpened = isOpen;
 
             Name = Path.GetFileName(directoryPath);
@@ -68,7 +77,7 @@ namespace HierarchyBox.ViewModels.FileExplorer
             var directoryViewModels
                 = Directory
                     .EnumerateDirectories(_directoryPath)
-                    .Select(path => new DirectoryViewModel(path, false, _contextCommand))
+                    .Select(path => new DirectoryViewModel(path, false, _contextCommand, _errorNotifier))
                     .ToArray();
             if (directoryViewModels.Length > 0)
             {
@@ -94,7 +103,14 @@ namespace HierarchyBox.ViewModels.FileExplorer
                 return;
             }
 
-            CommandExecuter.ExecuteDirectoryCommand(info, _directoryPath);
+            try
+            {
+                CommandExecuter.ExecuteDirectoryCommand(info, _directoryPath);
+            }
+            catch (Exception e)
+            {
+                _errorNotifier.NotifyMessage(e.ToString());
+            }
         }
     }
 }
