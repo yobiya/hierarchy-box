@@ -2,37 +2,36 @@
 using HierarchyBox.Models.FileExplorer;
 using System.Windows.Input;
 
-namespace HierarchyBox.ViewModels.FileExplorer
+namespace HierarchyBox.ViewModels.FileExplorer;
+
+public partial class FileViewModel : ObservableObject
 {
-    public partial class FileViewModel : ObservableObject
+    private readonly string _fullPath;
+    private readonly ContextCommand _contextCommand;
+
+    public string Name { get; }
+
+    public ICommand OnRequestContextMenuItem { get; }
+
+    public IEnumerable<ContextCommandInfo> CommandInfos => _contextCommand.FileCommandInfos;
+
+    public FileViewModel(string fullPath, ContextCommand contextCommand)
     {
-        private readonly string _fullPath;
-        private readonly ContextCommand _contextCommand;
+        _fullPath = fullPath;
+        _contextCommand = contextCommand;
 
-        public string Name { get; }
+        Name = Path.GetFileName(fullPath);
 
-        public ICommand OnRequestContextMenuItem { get; }
+        OnRequestContextMenuItem = new Command(CallContextMenu);
+    }
 
-        public IEnumerable<ContextCommandInfo> CommandInfos => _contextCommand.FileCommandInfos;
-
-        public FileViewModel(string fullPath, ContextCommand contextCommand)
+    private void CallContextMenu(object parameter)
+    {
+        var info = CommandInfos.FirstOrDefault(i => i == parameter);
+        if (info.Command == ContextCommand.DefaultCommandName)
         {
-            _fullPath = fullPath;
-            _contextCommand = contextCommand;
-
-            Name = Path.GetFileName(fullPath);
-
-            OnRequestContextMenuItem = new Command(CallContextMenu);
-        }
-
-        private void CallContextMenu(object parameter)
-        {
-            var info = CommandInfos.FirstOrDefault(i => i == parameter);
-            if (info.Command == ContextCommand.DefaultCommandName)
-            {
-                // デフォルトの動作を呼び出す
-                var _ = Launcher.Default.OpenAsync(new OpenFileRequest("Open", new ReadOnlyFile(_fullPath)));
-            }
+            // デフォルトの動作を呼び出す
+            var _ = Launcher.Default.OpenAsync(new OpenFileRequest("Open", new ReadOnlyFile(_fullPath)));
         }
     }
 }
