@@ -13,15 +13,12 @@ public static class CommandExecuter
             return;
         }
 
-        var workingDirectory = commandInfo.WorkingDirectory;
-        workingDirectory = workingDirectory.Replace(CommandDefinitions.DirectoryPathReplaceTag, directoryPath);
-
         var command = commandInfo.Command;
         command = command.Replace(CommandDefinitions.DirectoryPathReplaceTag, directoryPath);
 
         var startInfo = new ProcessStartInfo(command);
         startInfo.UseShellExecute = false;
-        startInfo.WorkingDirectory = workingDirectory;
+        startInfo.WorkingDirectory = ConvertWorkDirectory(commandInfo, directoryPath);
 
         Process.Start(startInfo);
     }
@@ -35,4 +32,7 @@ public static class CommandExecuter
             return;
         }
     }
+
+    private static string ConvertWorkDirectory(ContextCommandInfo commandInfo, string directoryPath)
+        => commandInfo.WorkingDirectory.Replace(CommandDefinitions.DirectoryPathReplaceTag, directoryPath);
 }
