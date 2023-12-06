@@ -11,6 +11,7 @@ public partial class FileViewModel : ObservableObject
     private readonly ErrorNotifier _errorNotifier;
 
     public string Name { get; }
+    public ImageSource IconImageSource { get; }
 
     public ICommand OnRequestContextMenuItem { get; }
 
@@ -26,6 +27,15 @@ public partial class FileViewModel : ObservableObject
         _errorNotifier = errorNotifier;
 
         Name = Path.GetFileName(fullPath);
+        IconImageSource
+            = ImageSource.FromStream(() =>
+                {
+                    var icon = System.Drawing.Icon.ExtractAssociatedIcon(fullPath);
+                    var ms = new MemoryStream();
+                    icon.Save(ms);  
+
+                    return new MemoryStream(ms.ToArray());
+                });
 
         OnRequestContextMenuItem = new Command(CallContextMenu);
     }

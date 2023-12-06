@@ -2,9 +2,12 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HierarchyBox.Views.FileExplorer.FileCellView">
-    <Label Text="{Binding Name}">
-        <FlyoutBase.ContextFlyout>
-            <MenuFlyout x:Name="FileContextMenuFlyout" BindingContext="{Binding CommandInfos}"/>
-        </FlyoutBase.ContextFlyout>
-    </Label>
+    <HorizontalStackLayout Spacing="8">
+        <Image Source="{Binding IconImageSource}" WidthRequest="20" HeightRequest="20"/>
+        <Label Text="{Binding Name}" VerticalOptions="Center">
+            <FlyoutBase.ContextFlyout>
+                <MenuFlyout x:Name="FileContextMenuFlyout" BindingContext="{Binding CommandInfos}"/>
+            </FlyoutBase.ContextFlyout>
+        </Label>
+    </HorizontalStackLayout>
 </ContentView>
