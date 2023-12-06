@@ -25,4 +25,8 @@ public static class CommandExecuter
 
         Process.Start(startInfo);
     }
+
+    public static void ExecuteFileCommand(ContextCommandInfo commandInfo, string filePath)
+    {
+    }
 }
