@@ -13,10 +13,7 @@ public static class CommandExecuter
             return;
         }
 
-        var startInfo = CreateStartInfo(commandInfo);
-        startInfo.UseShellExecute = false;
-        startInfo.WorkingDirectory = ConvertWorkDirectory(commandInfo, directoryPath);
-
+        var startInfo = CreateStartInfo(commandInfo, directoryPath, null);
         Process.Start(startInfo);
     }
 
@@ -28,19 +25,51 @@ public static class CommandExecuter
             var _ = Launcher.Default.OpenAsync(new OpenFileRequest("Open", new ReadOnlyFile(filePath)));
             return;
         }
+
+        var directoryPath = Path.GetDirectoryName(filePath);
+        var fileName = Path.GetFileName(filePath);
+
+        var startInfo = CreateStartInfo(commandInfo, directoryPath, fileName);
+        Process.Start(startInfo);
     }
 
-    private static ProcessStartInfo CreateStartInfo(ContextCommandInfo commandInfo)
+    private static ProcessStartInfo CreateStartInfo(
+        ContextCommandInfo commandInfo,
+        string directoryPath,
+        string fileName)
     {
         var splitString = " ";
 
-        // スペースでコマンドを分割して、スペースのみの要素以外を取り出す
-        var commandStrings = commandInfo.Command.Split(splitString).Where(s => s != splitString).ToArray();
-        var command = commandStrings[0];
+        // スペースでコマンドを分割する
+        var commandStrings
+            = commandInfo
+                .Command
+                    .Split(splitString)
+                    .Where(s => !string.IsNullOrEmpty(s))
+                    .ToArray();
 
-        return new ProcessStartInfo(command);
+        var startInfo = new ProcessStartInfo(commandStrings[0]);
+
+        // 引数は特殊文字列を対応する文字列に置き換える
+        foreach (var arg in commandStrings.Skip(1))
+        {
+            var argument = arg;
+
+            if (!string.IsNullOrEmpty(directoryPath))
+                argument = argument.Replace(CommandDefinitions.DirectoryPathReplaceTag, directoryPath);
+
+            if (!string.IsNullOrEmpty(fileName))
+                argument = argument.Replace(CommandDefinitions.FileNameReplaceTag, fileName);
+
+            startInfo.ArgumentList.Add(argument);
+        }
+
+        startInfo.UseShellExecute = false;
+        startInfo.WorkingDirectory
+            = commandInfo
+                .WorkingDirectory
+                    .Replace(CommandDefinitions.DirectoryPathReplaceTag, directoryPath);
+
+        return startInfo;
     }
-
-    private static string ConvertWorkDirectory(ContextCommandInfo commandInfo, string directoryPath)
-        => commandInfo.WorkingDirectory.Replace(CommandDefinitions.DirectoryPathReplaceTag, directoryPath);
 }
