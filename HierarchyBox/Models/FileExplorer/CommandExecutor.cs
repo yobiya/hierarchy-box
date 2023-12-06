@@ -13,10 +13,7 @@ public static class CommandExecuter
             return;
         }
 
-        var command = commandInfo.Command;
-        command = command.Replace(CommandDefinitions.DirectoryPathReplaceTag, directoryPath);
-
-        var startInfo = new ProcessStartInfo(command);
+        var startInfo = CreateStartInfo(commandInfo);
         startInfo.UseShellExecute = false;
         startInfo.WorkingDirectory = ConvertWorkDirectory(commandInfo, directoryPath);
 
@@ -31,6 +28,17 @@ public static class CommandExecuter
             var _ = Launcher.Default.OpenAsync(new OpenFileRequest("Open", new ReadOnlyFile(filePath)));
             return;
         }
+    }
+
+    private static ProcessStartInfo CreateStartInfo(ContextCommandInfo commandInfo)
+    {
+        var splitString = " ";
+
+        // スペースでコマンドを分割して、スペースのみの要素以外を取り出す
+        var commandStrings = commandInfo.Command.Split(splitString).Where(s => s != splitString).ToArray();
+        var command = commandStrings[0];
+
+        return new ProcessStartInfo(command);
     }
 
     private static string ConvertWorkDirectory(ContextCommandInfo commandInfo, string directoryPath)
