@@ -28,5 +28,11 @@ public static class CommandExecuter
 
     public static void ExecuteFileCommand(ContextCommandInfo commandInfo, string filePath)
     {
+        if (commandInfo.Command == ContextCommand.DefaultCommandName)
+        {
+            // デフォルトの動作を呼び出す
+            var _ = Launcher.Default.OpenAsync(new OpenFileRequest("Open", new ReadOnlyFile(filePath)));
+            return;
+        }
     }
 }

@@ -8,6 +8,7 @@ public partial class FileViewModel : ObservableObject
 {
     private readonly string _fullPath;
     private readonly ContextCommand _contextCommand;
+    private readonly ErrorNotifier _errorNotifier;
 
     public string Name { get; }
 
@@ -15,10 +16,14 @@ public partial class FileViewModel : ObservableObject
 
     public IEnumerable<ContextCommandInfo> CommandInfos => _contextCommand.FileCommandInfos;
 
-    public FileViewModel(string fullPath, ContextCommand contextCommand)
+    public FileViewModel(
+        string fullPath,
+        ContextCommand contextCommand,
+        ErrorNotifier errorNotifier)
     {
         _fullPath = fullPath;
         _contextCommand = contextCommand;
+        _errorNotifier = errorNotifier;
 
         Name = Path.GetFileName(fullPath);
 
@@ -28,10 +33,18 @@ public partial class FileViewModel : ObservableObject
     private void CallContextMenu(object parameter)
     {
         var info = CommandInfos.FirstOrDefault(i => i == parameter);
-        if (info.Command == ContextCommand.DefaultCommandName)
+        if (info is null)
         {
-            // デフォルトの動作を呼び出す
-            var _ = Launcher.Default.OpenAsync(new OpenFileRequest("Open", new ReadOnlyFile(_fullPath)));
+            return;
+        }
+
+        try
+        {
+            CommandExecuter.ExecuteFileCommand(info, _fullPath);
+        }
+        catch (Exception e)
+        {
+            _errorNotifier.NotifyMessage(e.ToString());
         }
     }
 }

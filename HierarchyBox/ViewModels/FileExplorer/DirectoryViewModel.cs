@@ -66,7 +66,7 @@ public partial class DirectoryViewModel : ObservableObject
         var fileFullPaths = Directory.EnumerateFiles(_directoryPath);
         if (fileFullPaths.Any())
         {
-            FileInfos = fileFullPaths.Select(path => new FileViewModel(path, _contextCommand)).ToArray();
+            FileInfos = fileFullPaths.Select(path => new FileViewModel(path, _contextCommand, _errorNotifier)).ToArray();
             IsVisibleFileNames = true;
         }
         else
